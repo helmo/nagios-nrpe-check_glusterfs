@@ -99,7 +99,7 @@ bricksfound=0
 freegb=9999999
 shopt -s nullglob
 while read -r line; do
-	field=($(echo $line))
+	field=($line)
 	case ${field[0]} in
 	Brick) 
 		brick=${field[@]:2}
@@ -132,8 +132,12 @@ while read -r line; do
 			errors=("${errors[@]}" "$brick offline")
 		fi
 		;;
+	Volume)
+		# Volume xxx is not started
+		Exit CRITICAL "${line}"
+		;;
 	esac
-done < <(sudo gluster volume status ${VOLUME} detail)
+done < <(sudo gluster volume status ${VOLUME} detail 2>&1)
 
 if [ $bricksfound -eq 0 ]; then
 	Exit CRITICAL "no bricks found"
