@@ -10,3 +10,7 @@ ln -s /usr/lib/nagios/plugins/utils.sh utils.sh
 will help. 
 
 An alternative would be to edit the check and adapt the line ". $PROGPATH/utils.sh" according to your needs.
+
+Requirements
+===========================
+The check requires the tool "bc" to be installed. On Debian, "apt-get install bc" will do the trick.
