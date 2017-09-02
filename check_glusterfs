@@ -125,7 +125,9 @@ while read -r line; do
 				Exit UNKNOWN "unknown disk space size $freeunit"
 			fi
 			free=$(bc -q <<<"$free / 1")
-			if [[ $free -lt $freegb ]]; then
+			# Check if the value is lower the the previous, and skip it for arbiter bricks.
+			# Having arbiter in the brick name is just a naming convetion, not enforced by Gluster
+			if [[ $free -lt $freegb ]] && [[ $brick != *"arbiter"* ]]; then
 				freegb=$free
 				lowest_freeunit=$freeunit
 			fi
